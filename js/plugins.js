@@ -13,7 +13,6 @@ Fluid.plugins = {
 
     var typed = new window.Typed('#subtitle', {
       strings: [
-        '万里悲秋常作客，百年多病独登台。',
         '  ',
         text
       ],
