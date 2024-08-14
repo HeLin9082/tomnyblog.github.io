@@ -1,0 +1,779 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/tomnyblog.github.io/img/fluid.png">
+  <link rel="icon" href="/tomnyblog.github.io/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Tomny">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="接着上一篇前端模块化的学习，继续ES模块化案例详解，本篇为 webpack + babel 构建编译和打包ES6模块的过程…">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ESM模块化开发案例">
+<meta property="og:url" content="https://helin9082.github.io/tomnyblog.github.io/2024/05/09/Z-ESModulePro/index.html">
+<meta property="og:site_name" content="Tomny‘s Hexo Blog">
+<meta property="og:description" content="接着上一篇前端模块化的学习，继续ES模块化案例详解，本篇为 webpack + babel 构建编译和打包ES6模块的过程…">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://helin9082.github.io/tomnyblog.github.io/images/esModule.png">
+<meta property="article:published_time" content="2024-05-09T02:00:00.000Z">
+<meta property="article:modified_time" content="2024-08-14T13:45:52.052Z">
+<meta property="article:author" content="Tomny">
+<meta property="article:tag" content="前后端">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://helin9082.github.io/tomnyblog.github.io/images/esModule.png">
+  
+  
+  
+  <title>ESM模块化开发案例 - Tomny‘s Hexo Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/tomnyblog.github.io/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/tomnyblog.github.io/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/tomnyblog.github.io/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"helin9082.github.io","root":"/tomnyblog.github.io/","version":"1.9.7","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"1WMPCBtXbHsEZQPtn46FyHKA-gzGzoHsz","app_key":"qTAuXOECTZoLspCFmf9XJX2A","server_url":"https://1wmpcbtx.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/tomnyblog.github.io/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/tomnyblog.github.io/js/utils.js" ></script>
+  <script  src="/tomnyblog.github.io/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/tomnyblog.github.io/">
+      <strong>WelcomeTo Tomny’s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tomnyblog.github.io/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tomnyblog.github.io/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tomnyblog.github.io/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tomnyblog.github.io/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tomnyblog.github.io/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/tomnyblog.github.io/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ESM模块化开发案例"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-05-09 10:00" pubdate>
+          2024年5月9日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">ESM模块化开发案例</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>接着上一篇前端模块化的学习，继续ES模块化案例详解，本篇为 webpack + babel 构建编译和打包ES6模块的过程…</p>
+<span id="more"></span>
+
+<p>本文注重 webpack + babel 构建编译和打包es6模块的过程，偏向模块化环境构建演示，不具体es6的语法代码深入。</p>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><h3 id="1、创建项目与初始化"><a href="#1、创建项目与初始化" class="headerlink" title="1、创建项目与初始化"></a>1、创建项目与初始化</h3><p>前提：安装好node.js，打开命令行工具，查看node和npm正确显示版本号。<br>创建一个项目文件夹：myESM-project ，进入项目使用npm初始化项目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm init -y<br></code></pre></td></tr></table></figure>
+
+<h3 id="2、项目结构"><a href="#2、项目结构" class="headerlink" title="2、项目结构"></a>2、项目结构</h3><p>创建项目文件夹后，创建项目结构如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs text">myESM-project<br>|-js  <br>    |-dist //打包生成文件的目录 （可打包命令时生成，无需手动创建）  <br>    |-src //源码所在的目录    <br>        |-app.js    // 应用主源文件（编译打包模块的主入口）<br>        |-module1.js    <br>        |-module2.js    <br>        |-module3.js <br>|-index.html    // 运行于浏览器上 <br>|-package.json  // (npm初始化自动创建)<br>|-.babelrc      // babel配置文件。（手动创建）文件名包括&quot;.&quot; 或者 babel.config.json 取决你的偏好<br>|-webpack.config.js  // webpack配置文件（手动创建）<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="3、安装-webpack-和-babel-的相关依赖包"><a href="#3、安装-webpack-和-babel-的相关依赖包" class="headerlink" title="3、安装 webpack 和 babel 的相关依赖包"></a>3、安装 webpack 和 babel 的相关依赖包</h3><p>基础安装 5个 依赖包配置打包js的模块（css和image等其它loaders配置待续）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install webpack webpack-cli babel-loader @babel/core @babel/preset-env --save-dev（或-D）<br><br>// webpack 和 webpack-cli 是 Webpack 的核心和命令行工具。<br>// babel-loader 是 Webpack 的一个 loader，用于将 Babel 整合到 Webpack 的构建流程中。<br>// @babel/core 是 Babel 的核心库。<br>// @babel/preset-env 是一个智能预设，可以根据你的目标环境自动启用所需的 Babel 插件。<br><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="4、项目文件相关配置"><a href="#4、项目文件相关配置" class="headerlink" title="4、项目文件相关配置"></a>4、项目文件相关配置</h3><p>安装相关依赖包后对babel预设以及webpack配置：(根目录下手动创建 2个 配置文件)<br>配置babel：<br>.babelrc 文件（或者 babel.config.json 取决你的偏好），并添加以下配置(json格式)：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">&#123;  <br>    &quot;presets&quot;: [&quot;@babel/preset-env&quot;]  <br>&#125;<br><br>（告诉 Babel 使用 @babel/preset-env 预设来转码你的代码）<br><br></code></pre></td></tr></table></figure>
+
+<p>配置webpack：<br>webpack.config.js 文件，并添加以下基础配置（js格式）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// webpack.config.js 文件 (在这个文件可以定义入口点、输出配置、加载器(loaders)等)</span><br><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);  <br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;  <br>    <span class="hljs-attr">entry</span>: <span class="hljs-string">&#x27;./js/src/app.js&#x27;</span>,    <span class="hljs-comment">// 入口文件  </span><br>    <span class="hljs-attr">output</span>: &#123;  <br>        <span class="hljs-attr">filename</span>: <span class="hljs-string">&#x27;bundle.js&#x27;</span>,      <span class="hljs-comment">// 打包后的文件名  </span><br>        <span class="hljs-attr">path</span>: path.<span class="hljs-title function_">resolve</span>(__dirname, <span class="hljs-string">&#x27;./js/dist&#x27;</span>),  <span class="hljs-comment">// 打包后文件的输出路径  </span><br>    &#125;,  <br>    <span class="hljs-attr">module</span>: &#123;  <br>        <span class="hljs-attr">rules</span>: [&#123;  <br>            <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.js$/</span>,           <span class="hljs-comment">// 匹配 .js 文件  </span><br>            <span class="hljs-attr">exclude</span>: <span class="hljs-regexp">/node_modules/</span>,        <span class="hljs-comment">// 排除 node_modules 目录  </span><br>            <span class="hljs-attr">use</span>: &#123;  <br>                <span class="hljs-attr">loader</span>: <span class="hljs-string">&#x27;babel-loader&#x27;</span>,     <span class="hljs-comment">// 使用 babel-loader 来转译 ES6 代码  </span><br>                <span class="hljs-attr">options</span>: &#123;  <br>                    <span class="hljs-attr">presets</span>: [<span class="hljs-string">&#x27;@babel/preset-env&#x27;</span>]      <span class="hljs-comment">// 使用 @babel/preset-env 预设(传递选项给 loader)   </span><br>                &#125;  <br>            &#125;  <br>        &#125;]  <br>    &#125;  <br>&#125;;<br><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="5、编写模块代码与构建打包项目"><a href="#5、编写模块代码与构建打包项目" class="headerlink" title="5、编写模块代码与构建打包项目"></a>5、编写模块代码与构建打包项目</h3><p>编写代码：<br>&nbsp;&nbsp;&nbsp;&nbsp;现在项目中可以开始编写 ES6 代码了。例如在app.js文件导入module1、module2、module3和module4</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">//module1.js 文件  (单独导出 —— 命名函数）</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123; <br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;---这里是module1.js的foo()---&#x27;</span>)<br>&#125;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">bar</span>(<span class="hljs-params"></span>) &#123;  <br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;---这里是module1.js的bar()---&#x27;</span>)<br>&#125;<br><br><br><br><span class="hljs-comment">//module2.js 文件  (统一导出 —— 命名函数）</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">fun1</span>(<span class="hljs-params"></span>) &#123;  <br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;---这里是module2.js的fun1()---&#x27;</span>)<br>&#125;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">fun2</span>(<span class="hljs-params"></span>) &#123;  <br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;---这里是module2.js的fun2()---&#x27;</span>)<br>&#125;<br><br><span class="hljs-keyword">export</span> &#123; fun1, fun2 &#125;<br><br><br><br><span class="hljs-comment">//module3.js 文件  (默认导出 —— 匿名函数及调用命名函数）</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">fun3</span>(<span class="hljs-params">params</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;---这里是-module3.js--默认导出匿名函数使用的外函数fun3---&#x27;</span>);<br>&#125;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> () =&gt; &#123;  <br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;---这里是module3.js---默认导出的匿名函数&#x27;</span>);<br>    funModule3<br>&#125;<br><br><br><br><span class="hljs-comment">//module4.js 文件  (默认导出 —— 对象）</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;  <br>    <span class="hljs-attr">str</span>: <span class="hljs-string">&#x27;---这里是-module4.js---默认导出的对象--属性str。&#x27;</span>,  <br>    <span class="hljs-title function_">fun4</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;---这里是module4.js---默认导出的对象--方法fun4---&#x27;</span>); <br>     &#125;<br>&#125;<br><br><br><br><span class="hljs-comment">//app.js 文件  (模块主入口——导入模块并调用模块)</span><br><span class="hljs-keyword">import</span> &#123; foo, bar &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./module1&#x27;</span><br><span class="hljs-keyword">import</span> &#123; fun1, fun2 &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./module2&#x27;</span><br><span class="hljs-keyword">import</span> module3 <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./module3&#x27;</span><br><span class="hljs-keyword">import</span> module4 <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./module4&#x27;</span><br><br><span class="hljs-comment">// 需要使用第三方模块时（npm安装好jquery在项目内）</span><br><span class="hljs-comment">// import $ from &#x27;jquery&#x27;</span><br><span class="hljs-comment">// $(&#x27;body&#x27;).css(&#x27;background&#x27;, &#x27;red&#x27;);</span><br><br><span class="hljs-comment">// 所有的模块导入后调用</span><br><span class="hljs-title function_">foo</span>()<br><span class="hljs-title function_">bar</span>()<br><span class="hljs-title function_">fun1</span>()<br><span class="hljs-title function_">fun2</span>()<br><span class="hljs-title function_">module3</span>()<br>module4.<span class="hljs-title function_">fun4</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(module4.<span class="hljs-property">str</span>);  <span class="hljs-comment">//（调用默认导出的对象属性）</span><br>  <br><span class="hljs-comment">// 获取html主入口元素</span><br><span class="hljs-keyword">let</span> element = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;ele&#x27;</span>);  <span class="hljs-comment">// 获取元素</span><br>element.<span class="hljs-property">textContent</span> = <span class="hljs-string">&#x27;数据：&#x27;</span> + module4.<span class="hljs-property">str</span>;  <span class="hljs-comment">// 打包后渲染</span><br><br></code></pre></td></tr></table></figure>
+<p>构建项目：<br>使用命令：运行 Webpack 命令来构建你的项目。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">终端：npm webpack --mode development<br>或者：npx webpack --mode development<br></code></pre></td></tr></table></figure>
+
+<p>或使用简化命令：构建命令在 package.json 文件中添加一个脚本命令：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs text">&quot;scripts&quot;: &#123;  <br>    &quot;build&quot;: &quot;webpack --mode development&quot;  <br>&#125;<br>使用命令：npm run build<br>命令参数详解：<br>--mode development 告诉 Webpack 使用开发模式配置，通常是更详细的错误信息和更小的压缩包，便于调试。<br>--mode production 告诉 Webpack 使用生产模式配置。<br><br></code></pre></td></tr></table></figure>
+<p>构建后检查 Webpack 会在你指定的输出目录中（此例子中是 dist&#x2F; 目录）生成一个 bundle.js 文件，<br>这个文件包含了所有必要的转译后的代码，以及通过 Webpack 打包的依赖项。</p>
+<h3 id="6、在浏览器运行文件"><a href="#6、在浏览器运行文件" class="headerlink" title="6、在浏览器运行文件"></a>6、在浏览器运行文件</h3><p>在 HTML 中引用打包后的文件：<br>引入打包好的 bundle.js 文件，浏览器就可以执行 ES6 的代码了。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">（引入放置页面底部body标签前）<br>&lt;script src=&quot;./js/dist/bundle.js&quot;&gt;&lt;/script&gt;<br><br></code></pre></td></tr></table></figure>
+
+<p><br><br><br><br>（待续…）<br><br><br></p>
+<p style="font-size: 10px">
+注：<br>本站商业转载需<a target="_blank" rel="noopener" href="https://email.163.com/">联系博主:wyyx9082hgl@163.com</a>授权，非商业转载请注明出处。<br>
+    无法联系博主请在评论区注明，未经授权或无联系方式相关法律责任问题将追究。
+</p>
+
+<p style="font-size: 10px">
+    本站为学习交流使用，非商业用途。如有资源侵权请<a target="_blank" rel="noopener" href="https://email.163.com/">[联系博主]</a>，感谢您的支持！
+</p>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/tomnyblog.github.io/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tomnyblog.github.io/tags/%E5%89%8D%E5%90%8E%E7%AB%AF/" class="print-no-link">#前后端</a>
+      
+        <a href="/tomnyblog.github.io/tags/%E5%89%8D%E7%AB%AF/" class="print-no-link">#前端</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ESM模块化开发案例</div>
+      <div>https://helin9082.github.io/tomnyblog.github.io/2024/05/09/Z-ESModulePro/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Tomny</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年5月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/tomnyblog.github.io/2024/05/05/Zmodularization/" title="前端模块化开发">
+                        <span class="hidden-mobile">前端模块化开发</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"1WMPCBtXbHsEZQPtn46FyHKA-gzGzoHsz","appKey":"qTAuXOECTZoLspCFmf9XJX2A","path":"window.location.pathname","placeholder":"是的，你应该想说点什么...","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总浏览量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/tomnyblog.github.io/js/events.js" ></script>
+<script  src="/tomnyblog.github.io/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/tomnyblog.github.io/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/tomnyblog.github.io/js/leancloud.js" ></script>
+
+  <script  src="/tomnyblog.github.io/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/tomnyblog.github.io/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

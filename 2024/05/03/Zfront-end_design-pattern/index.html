@@ -1,0 +1,839 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/tomnyblog.github.io/img/fluid.png">
+  <link rel="icon" href="/tomnyblog.github.io/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Tomny">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="什么是前端设计模式？包括哪些模式？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端设计模式">
+<meta property="og:url" content="https://helin9082.github.io/tomnyblog.github.io/2024/05/03/Zfront-end_design-pattern/index.html">
+<meta property="og:site_name" content="Tomny‘s Hexo Blog">
+<meta property="og:description" content="什么是前端设计模式？包括哪些模式？">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://helin9082.github.io/tomnyblog.github.io/images/designModule.png">
+<meta property="article:published_time" content="2024-05-03T02:00:00.000Z">
+<meta property="article:modified_time" content="2024-08-14T13:48:21.614Z">
+<meta property="article:author" content="Tomny">
+<meta property="article:tag" content="前后端">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://helin9082.github.io/tomnyblog.github.io/images/designModule.png">
+  
+  
+  
+  <title>前端设计模式 - Tomny‘s Hexo Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/tomnyblog.github.io/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/tomnyblog.github.io/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/tomnyblog.github.io/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"helin9082.github.io","root":"/tomnyblog.github.io/","version":"1.9.7","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"1WMPCBtXbHsEZQPtn46FyHKA-gzGzoHsz","app_key":"qTAuXOECTZoLspCFmf9XJX2A","server_url":"https://1wmpcbtx.lc-cn-n1-shared.com","path":"window.location.pathname","ignore_local":false}},"search_path":"/tomnyblog.github.io/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/tomnyblog.github.io/js/utils.js" ></script>
+  <script  src="/tomnyblog.github.io/js/color-schema.js" ></script>
+  
+
+  
+
+  
+    <!-- Google tag (gtag.js) -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        Fluid.utils.createScript("https://www.googletagmanager.com/gtag/js?id=", function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag('js', new Date());
+          gtag('config', '');
+        });
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/tomnyblog.github.io/">
+      <strong>WelcomeTo Tomny’s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tomnyblog.github.io/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tomnyblog.github.io/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tomnyblog.github.io/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tomnyblog.github.io/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tomnyblog.github.io/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/tomnyblog.github.io/images/backgroundCode.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="前端设计模式"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-05-03 10:00" pubdate>
+          2024年5月3日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          77 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">前端设计模式</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>什么是前端设计模式？包括哪些模式？</p>
+<span id="more"></span>
+
+
+<p>设计模式不只是前端，也适用任何开发人员的学习与思考；当然，前端方面需要些基础才能更好深入学习，比如了解面向对象编程(OOP)、函数式编程、了解框架与库和工程化模块化组件化开发…等等~~  <br></p>
+<h2 id="什么是前端设计模式？"><a href="#什么是前端设计模式？" class="headerlink" title="什么是前端设计模式？"></a>什么是前端设计模式？</h2><p>前端设计模式是什么？前端设计模式是一套被反复使用、多数人知晓的、经过分类编目的、代码设计经验的总结；拆开来讲，首先前端设计这个就容易理解了，比如项目需要的N个页面、各种页面的样式和排版、界面的各种交互与和逻辑操作…等等；<br>再来理解模式，这个有些说法了，与其说模式，大都开发人员广泛的认为是一种方案，只不过多种模式多种方案罢了；既然设计模式是解决问题的方案，也就是多种模式多种解决问题的办法了。同样的问题可以不同的办法，不同的问题也有相同或不同的办法，所以设计模式也是一种思想，一种思维的艺术…<br></p>
+<h2 id="前端设计包括哪些模式？"><a href="#前端设计包括哪些模式？" class="headerlink" title="前端设计包括哪些模式？"></a>前端设计包括哪些模式？</h2><p>本文的设计模式包括五种：创建型、结构型、行为型、技巧型和架构型；<br><br>细分目录：<br><span style="color:blue">创建型设计模式：</span><span style="font-size:14px">简单工厂模式；工厂方法模式；抽象工厂模式；建造者模式；原型模式；单例模式。</span><br><span style="color:blue">结构型设计模式：</span><span style="font-size:14px">外观模式；适配器模式；代理模式；装饰者模式；桥接模式；组合模式；享元模式。</span><br><span style="color:blue">行为型设计模式：</span><span style="font-size:14px">模板方法模式；观察者模式；状态模式；策略模式；职责链模式；命令模式；访问者模式；中介者模式；备忘录模式；迭代器模式；解释器模式。</span><br><span style="color:blue">技巧型设计模式：</span><span style="font-size:14px">链模式；委托模式；数据访问对象模式；节流模式；简单模板模式；惰性模式；参与者模式；等待者模式。</span><br><span style="color:blue">架构型设计模式：</span><span style="font-size:14px">同步模块模式；异步模块模式；组件化开发模式；Widget模式；前端路由模式；响应式设计模式；MVC模式；MVP模式；MVVM模式。</span></p>
+<br>
+<!-- <span style="color:red"></span> -->
+
+<h2 id="一、创建型设计模式-—-处理对象的创建，控制对象创建时设计的问题或复杂度"><a href="#一、创建型设计模式-—-处理对象的创建，控制对象创建时设计的问题或复杂度" class="headerlink" title="一、创建型设计模式 — 处理对象的创建，控制对象创建时设计的问题或复杂度"></a><span style="color:blue">一、创建型设计模式 — 处理对象的创建，控制对象创建时设计的问题或复杂度</span></h2><h3 id="1、简单工厂模式（Simple-Factory）"><a href="#1、简单工厂模式（Simple-Factory）" class="headerlink" title="1、简单工厂模式（Simple Factory）"></a>1、简单工厂模式（Simple Factory）</h3><p><span style="color:red">简单工厂模式：</span>又称静态工厂方法模式，但不属于GOF设计模式（Gang of Four设计模式）之一，是由一个工厂对象决定创建出哪一种产品类的实例，也是工厂模式家族中最简单实用的模式。<br><br><span style="color:red">场景：</span>当需要创建的对象较少且不会频繁增加时。<br><br><span style="color:red">优点：</span>客户端不需要知道具体产品的类名，只需要知道对应的工厂类和产品类型。<br><span style="color:red">缺点：</span>当产品种类增加时需要修改工厂类的判断逻辑，违反了开闭原则。<br><br></p>
+<h3 id="2、工厂方法模式（Factory-Method）"><a href="#2、工厂方法模式（Factory-Method）" class="headerlink" title="2、工厂方法模式（Factory Method）"></a>2、工厂方法模式（Factory Method）</h3><p><span style="color:red">工厂方法模式：</span>也称虚拟构造器模式(Virtual Constructor)或者多态工厂模式(Polymorphic Factory)，定义一个接口用于创建对象，让子类决定实例化哪一个类。使一个类的实例化延迟到其子类。<br><br><span style="color:red">场景：</span>适用于创建具有不同构造过程的对象，需要在运行时根据不同条件创建对象，并具体类的实例化需要延迟到子类时。例如连接池、不同类型的日志记录器（如文件日志记录器、数据库日志记录器等）。<br><br><span style="color:red">优点：</span>符合开闭原则，增加新产品时无需修改工厂接口和客户端代码，只需添加新的具体产品类和具体工厂类。<br><span style="color:red">缺点：</span>但每增加一个产品，就需要增加一个具体产品类和一个具体工厂类，增加了系统的复杂度。<br><br></p>
+<h3 id="3、抽象工厂模式（Abstract-Factory）"><a href="#3、抽象工厂模式（Abstract-Factory）" class="headerlink" title="3、抽象工厂模式（Abstract Factory）"></a>3、抽象工厂模式（Abstract Factory）</h3><p><span style="color:red">抽象工厂模式：</span>提供接口——用于创建一系列相关或相互依赖的对象而无需指定它们具体的类（即对类的工厂抽象使业务对产品类簇的创建而不负责创建某一类产品的实例）。可以看作是工厂方法模式的泛化，它允许创建多个对象族。<br><br><span style="color:red">场景：</span>创建具有相互依赖关系的对象族。例如，跨平台（如 Windows、macOS、Linux）的 GUI 工具箱（如相关的组件）或 UI 组件的跨平台开发。<br><br><span style="color:red">优点：</span>增加新的产品族时，无需修改已有系统，符合开闭原则，同时可保证客户端始终只使用同一个产品族中的对象。<br><span style="color:red">缺点：</span>增加新的产品等级结构时，需要修改抽象工厂接口及其所有子类，较为不便。<br><br></p>
+<h3 id="4、建造者模式（Builder）"><a href="#4、建造者模式（Builder）" class="headerlink" title="4、建造者模式（Builder）"></a>4、建造者模式（Builder）</h3><p><span style="color:red">建造者模式：</span>（Java模式也称生成器模式）某复杂对象的创建层和表示层的分离，同样的构建过程创建不同的表示。<br><br><span style="color:red">场景：</span>当创建对象的构建过程比较复杂，且需要创建不同表示时。<br><br><span style="color:red">优点：</span>客户端不必知道产品内部组成的细节，只需通过建造者接口来指定产品的类型和内容。<br><span style="color:red">缺点：</span>如果产品的内部变化复杂，可能会导致需要定义很多具体建造者类。<br><br></p>
+<h3 id="5、原型模式（Prototype）"><a href="#5、原型模式（Prototype）" class="headerlink" title="5、原型模式（Prototype）"></a>5、原型模式（Prototype）</h3><p><span style="color:red">原型模式：</span>用原型实例指向创建对象的种类，创建新对象的类可以通过拷贝来共享原型已创建对象的属于或方法。<br><br><span style="color:red">场景：</span>大量相似的对象，如编辑器中的图形工具。<br><br><span style="color:red">优点：</span>特别创建复杂对象时性能较好；同时可以动态地增加或删除对象的属性。<br><span style="color:red">缺点：</span>需要为每一个类配备一个克隆方法，且深拷贝的实现较为复杂。<br><br></p>
+<h3 id="6、单例模式（Singleton）"><a href="#6、单例模式（Singleton）" class="headerlink" title="6、单例模式（Singleton）"></a>6、单例模式（Singleton）</h3><p><span style="color:red">单例模式：</span>也称为单体模式，一个类只能一个实例，且有一个全局访问点。<br><br><span style="color:red">场景：</span>当一个类只需要一个实例来协调操作时，如配置管理器、资源管理器等。<br><br><span style="color:red">优点：</span>减少内存开销，避免对共享资源的多重占用。<br><span style="color:red">缺点：</span>单例模式一般没有接口，扩展困难；若单例对象大量数据可能成为系统的瓶颈。</p>
+<p><br><br></p>
+<h2 id="二、结构型设计模式-—-简化-类或对象-组成大而复杂结构"><a href="#二、结构型设计模式-—-简化-类或对象-组成大而复杂结构" class="headerlink" title="二、结构型设计模式 — 简化(类或对象)组成大而复杂结构"></a><span style="color:blue">二、结构型设计模式</span> — 简化(类或对象)组成大而复杂结构</h2><h3 id="7、外观模式（Facade-Pattern）"><a href="#7、外观模式（Facade-Pattern）" class="headerlink" title="7、外观模式（Facade Pattern）"></a>7、外观模式（Facade Pattern）</h3><p><span style="color:red">外观模式：</span>将子系统复杂接口统一提供一个接口，来更方便使用子系统。<br><br><span style="color:red">场景：</span>客户端需要访问多个子系统，但又不想直接依赖这些子系统时；或者只想一个接口就能使用多个子系统时。<br><br><span style="color:red">优点：</span>封装子系统复杂性，为客户端提供一个简单接口，降低系统的耦合度。<br><span style="color:red">缺点：</span>如果设计的接口过于复杂，可能会违反单一职责原则。<br><br></p>
+<h3 id="8、适配器模式（Adapter-Pattern）"><a href="#8、适配器模式（Adapter-Pattern）" class="headerlink" title="8、适配器模式（Adapter Pattern）"></a>8、适配器模式（Adapter Pattern）</h3><p><span style="color:red">适配器模式：</span>解决对象(或类)之间接口的不兼容性，即将接口转化成另一个接口。<br><br><span style="color:red">场景：</span>替换依赖的系统或库来兼容新的接口；适配不同的数据能在同一系统使用，如数据格式，接口设计成一种数据格式统一多种不同的数据源格式。<br><br><span style="color:red">优点：</span>不兼容的接口可转换为可兼容的接口，提高代码复用性和灵活性。<br><span style="color:red">缺点：</span>过多使用适配器可能会导致代码中的方法调用变得复杂和难以理解。<br><br></p>
+<h3 id="9、代理模式（Proxy-Pattern）"><a href="#9、代理模式（Proxy-Pattern）" class="headerlink" title="9、代理模式（Proxy Pattern）"></a>9、代理模式（Proxy Pattern）</h3><p><span style="color:red">代理模式：</span>也称委托模式，例如充当中介，作为目标对象有相同功能或作用的接口供第三者对象使用（即控制第三者对目标对象的拒绝或允许使用对象。<br><br><span style="color:red">场景：</span>业务系统中开发非功能性需求，如监控、统计、鉴权、限流等；用于客户端和服务器之间进行通信的远程代理；用于控制资源加载和初始的虚拟代理化，如图片懒加载、客户端请求服务端跨域资源。<br><br><span style="color:red">优点：</span>不改变原始类代码时通过引入代理类来给原始类附加功能，增强代码灵活性。<br><span style="color:red">缺点：</span>静态代理需要为每个被代理类创建一个代理类，可能类文件数量过多导致增加维护难度，动态代理虽然可以解决这一问题，但可能带来一些性能开销。<br><br></p>
+<h3 id="10、装饰者模式（Decorator-Pattern）"><a href="#10、装饰者模式（Decorator-Pattern）" class="headerlink" title="10、装饰者模式（Decorator Pattern）"></a>10、装饰者模式（Decorator Pattern）</h3><p><span style="color:red">装饰者模式：</span>不改变(原对象)原类文件和使用继承的基础上，动态地包装扩展对象功能（添加属性或方法）。<br><br><span style="color:red">场景：</span>通过嵌套多个装饰器类来解决原始类在多个方向上功能扩展的问题，或给原对象添加格外的职责又不想用继承来扩展类的功能时。<br><br><span style="color:red">优点：</span>能动态给对象添加额外职责从而灵活的生成子类，且装饰者和被装饰者可以独立扩展，不会相互耦合。<br><span style="color:red">缺点：</span>装饰者过多可能导致类层次结构变得复杂。<br><br></p>
+<h3 id="11、桥接模式（Brideg）"><a href="#11、桥接模式（Brideg）" class="headerlink" title="11、桥接模式（Brideg）"></a>11、桥接模式（Brideg）</h3><p><span style="color:red">桥接模式：</span>又称为柄体(Handle and Body)模式或接口(interface)模式，多个维度变化的同时完成不增加复杂度的解耦（即将抽象部分与实现部分脱耦，两个部分可以独立变化(各自组合或扩展)）。<br><br><span style="color:red">场景：</span>组件化开发，如React、‌Vue等将组件的外观（元素样式）和行为可以独立变化，‌而不会影响到其他部分的实现；独立变化的维度，如在图形绘制系统中，‌可以将形状和颜色的实现分离。<br><br><span style="color:red">优点：</span>解耦实现抽象和实现之间的绑定关系且各自维度变化灵活；两个变化的维度中任意扩展一个维度，‌不需要修改原有系统，‌符合开闭原则；因多层继承方案违背了单一职责原则、复用性差和类的个数多，可作为一个替代方案避免多层继承的缺点；实现细节对客户端透明，‌可以对用户隐藏实现细节。<br><span style="color:red">缺点：</span>增加系统的理解与设计难度，因为关联关系建立在抽象层，‌要求开发一开始就针对抽象层进行设计与编程；适用范围有一定的局限性。<br><br></p>
+<h3 id="12、组合模式（Composite-Pattern）"><a href="#12、组合模式（Composite-Pattern）" class="headerlink" title="12、组合模式（Composite Pattern）"></a>12、组合模式（Composite Pattern）</h3><p><span style="color:red">组合模式：</span>又叫做部分-整体模式，使得用户对单个对象和组合对象的使用具有一致性。<br><br><span style="color:red">场景：</span>需要表示对象的部分-整体层次结构时。希望客户端可以忽略组合对象与单个对象的差异时。<br><br><span style="color:red">优点：</span>客户端可以一致地处理单个对象和组合对象，复杂对象清晰地定义层次，而且符合开闭原则。<br><span style="color:red">缺点：</span>设计时需要考虑到组合对象与单个对象的差异，且在运行时进行类型检查可能会变得复杂。<br><br></p>
+<h3 id="13、享元模式（Flyweight-Pattern）"><a href="#13、享元模式（Flyweight-Pattern）" class="headerlink" title="13、享元模式（Flyweight Pattern）"></a>13、享元模式（Flyweight Pattern）</h3><p><span style="color:red">享元模式：</span>运用共享技术有效的支持大量细粒度的对象，避免对象间因有相同内容造成多余的内存开销。<br><br><span style="color:red">场景：</span>当系统中存在大量重复对象时，通过共享实例减少内存占用。在需要频繁创建和销毁对象的场景中，如渲染大量相似图形的游戏或图形应用程序。<br><br><span style="color:red">优点：</span>通过共享技术有效地减少了内存使用。<br><span style="color:red">缺点：</span>若对象的状态频繁变化，可能会增加额外的开销来维护状态的一致性。<br></p>
+<p><br><br></p>
+<h2 id="三、行为型设计模式-—-实现职责划分或算法抽象的交流"><a href="#三、行为型设计模式-—-实现职责划分或算法抽象的交流" class="headerlink" title="三、行为型设计模式 — 实现职责划分或算法抽象的交流"></a><span style="color:blue">三、行为型设计模式</span> — 实现职责划分或算法抽象的交流</h2><h3 id="14、模板方法模式（Template-Method-Pattern）"><a href="#14、模板方法模式（Template-Method-Pattern）" class="headerlink" title="14、模板方法模式（Template Method Pattern）"></a>14、模板方法模式（Template Method Pattern）</h3><p><span style="color:red">模板方法模式：</span>定义了一个算法的骨架，将一些步骤的实现延迟到子类中。在模板方法中，父类定义了一个模板方法，该方法包含了算法的骨架，而具体的实现细节由子类来完成。（即做好一个算法模板骨架的方法，其子类使用方法按照规定的骨架）。<br><br><span style="color:red">场景：</span>当算法的整体步骤很固定，但其中个别部分易变时，可以使用模板方法模式将容易变的部分抽象出来，供子类实现；需要通过子类来决定父类算法中某个步骤是否执行，实现子类对父类的反向控制。比如，项目所有提示框样式一致、所有按钮一样字体大小。<br><br><span style="color:red">优点：</span>将算法的公共部分提取到抽象模板中，避免每个具体类中重复的相同代码。<br><span style="color:red">缺点：</span>每个不同的实现都需要定义一个子类，这会导致类的个数增加，系统更加庞大，设计也更加抽象；父类中的抽象方法由子类实现，子类执行的结果会影响父类的结果，这导致一种反向的控制结构，提高了代码阅读的难度。<br><br></p>
+<h3 id="15、观察者模式（Observer-Pattern）"><a href="#15、观察者模式（Observer-Pattern）" class="headerlink" title="15、观察者模式（Observer Pattern）"></a>15、观察者模式（Observer Pattern）</h3><p><span style="color:red">观察者模式：</span>又被称发布-订阅者模式或消息机制，某个对象（主题&#x2F;被观察者）状态发生变化时，所有该对象的关注者（观察者）均能收到状态变化通知，以进行相应的处理。<br><br><span style="color:red">场景：</span>实现事件驱动系统，如用户提交订单后通知库存管理系统减少库存、通知支付系统进行支付操作等。实现发布-订阅模式，其中发布者发布消息，而多个订阅者订阅并接收消息。<br><br><span style="color:red">优点：</span>实现对象间松耦合，主题对象和观察者对象之间相互独立，可以根据需求增加或删除观察者，而不需要修改主题对象；支持广播通信，主题对象的状态变化会通知所有的观察者。<br><span style="color:red">缺点：</span>观察者数量过多会导致系统性能下降，且观察者之间的依赖关系复杂会导致系统难以维护。<br><br></p>
+<h3 id="16、状态模式（State-Pattern）"><a href="#16、状态模式（State-Pattern）" class="headerlink" title="16、状态模式（State Pattern）"></a>16、状态模式（State Pattern）</h3><p><span style="color:red">状态模式：</span>允许一个对象在其内部状态改变时改变它的行为。对象看起来似乎修改了它的类。<br><br><span style="color:red">场景：</span>一个操作中含有庞大的多分支结构，并且这些分支依赖于该对象的状态时。当一个对象的行为取决于它的状态，并且它必须在运行时刻根据状态改变它的行为时。比如，在网上投票评选征集的图片。<br><br><span style="color:red">优点：</span>可以避免使用大量的if-else语句；减少了对象间的相互依赖；封装了转换规则，增加了新的状态很容易。<br><span style="color:red">缺点：</span>类与状态有关的方法会很多，造成类膨胀；增加了系统的复杂性和运行时的开销。<br><br></p>
+<h3 id="17、策略模式（Strategy-Pattern）"><a href="#17、策略模式（Strategy-Pattern）" class="headerlink" title="17、策略模式（Strategy Pattern）"></a>17、策略模式（Strategy Pattern）</h3><p><span style="color:red">策略模式：</span>定义了一系列算法，并将它们一个个封装起来，使它们可以相互替换。此模式让算法的变化独立于使用算法的客户。<br><br><span style="color:red">场景：</span>当一个类在运行时需要改变它的行为时。一个系统需要动态地在几种算法中选择一种。当一个应用程序需要很好地支持算法或者策略的自由切换、扩展时。<br><br><span style="color:red">优点：</span>算法可以自由切换，符合开闭原则；避免使用多重条件判断。<br><span style="color:red">缺点：</span>策略类会增多而且所有策略类都需要对外暴露。<br><br></p>
+<h3 id="18、职责链模式（Chain-of-Responsibility-Pattern）"><a href="#18、职责链模式（Chain-of-Responsibility-Pattern）" class="headerlink" title="18、职责链模式（Chain of Responsibility Pattern）"></a>18、职责链模式（Chain of Responsibility Pattern）</h3><p><span style="color:red">职责链模式：</span>定义了一种处理请求的方式，它让多个处理对象都有机会处理请求，从而避免了请求的发送者和接收者之间的耦合关系。<br><br><span style="color:red">场景：</span>处理对象不确定，需要动态指定处理对象。多个处理对象可以处理同一个请求，但处理对象的顺序可能不同。处理对象的数量和顺序可以动态变化。比如常用于日志记录、权限验证、请求过滤等场景。<br><br><span style="color:red">优点：</span>可动态增加或删除处理对象，方便系统的维护和升级；可对请求进行灵活处理，提高系统的可用性和性能；降低对象间耦合度，提高代码灵活性和可扩展性。<br><span style="color:red">缺点：</span>系统性能受到责任链长度和处理对象数量的影响，所以可能存在请求不能被处理的情况，需要在责任链的末端添加默认处理对象。<br><br></p>
+<h3 id="19、命令模式（Command-Pattern）"><a href="#19、命令模式（Command-Pattern）" class="headerlink" title="19、命令模式（Command Pattern）"></a>19、命令模式（Command Pattern）</h3><p><span style="color:red">命令模式：</span>将一个请求封装为一个对象，从而使我们可用不同的请求对客户进行参数化；对请求排队或记录请求日志，以及支持可撤销的操作。<br><br><span style="color:red">场景：</span>需要将发送者和接收者解耦时，可以使用命令模式。例如，在智能家居系统中，用户通过遥控器向设备发送命令。<br><br><span style="color:red">优点：</span>降低了系统的耦合度，提高了系统的灵活性。<br><span style="color:red">缺点：</span>增加了一些类的开销，如命令对象等。<br><br></p>
+<h3 id="20、访问者模式（Visitor-Pattern）"><a href="#20、访问者模式（Visitor-Pattern）" class="headerlink" title="20、访问者模式（Visitor Pattern）"></a>20、访问者模式（Visitor Pattern）</h3><p><span style="color:red">访问者模式：</span>作用于某对象结构中的元素，定义（不改变该对象而访问结构中元素）的新方法。<br><br><span style="color:red">场景：</span>需要对一个对象结构中的对象进行很多不同操作（操作间无关联），同时要避免让这些操作“污染”这些对象的类。如，一个系统有比较稳定的数据结构，但功能需求经常变化，这时使用访问者模式可以方便地添加新的访问者，而不需要修改原有的数据结构。<br><br><span style="color:red">优点：</span>解决了数据结构和操作之间的耦合性问题；易于增加新的操作，只需增加一个新的访问者类即可，符合开闭原则（对扩展开放，对修改关闭）；每个访问者类只负责一种操作（符合单一职责原则）。<br><span style="color:red">缺点：</span>数据结构发生变化，可能需要修改访问者类；元素类发生变化（如增加或减少属性），相应的访问者类也需要进行修改。<br><br></p>
+<h3 id="21、中介者模式（Mediator-Pattern）"><a href="#21、中介者模式（Mediator-Pattern）" class="headerlink" title="21、中介者模式（Mediator Pattern）"></a>21、中介者模式（Mediator Pattern）</h3><p><span style="color:red">中介者模式：</span>定义了一个中介对象来封装一系列的对象交互，使各个对象不需要显式地相互引用，从而使其耦合松散，而且可以独立地改变它们之间的交互。<br><br><span style="color:red">场景：</span>系统中对象之间存在复杂的引用关系，系统结构混乱且难以理解时。例如，在MVC模式中，控制器（Controller）就是模型（Model）和视图（View）的中介者，负责它们之间的交互。<br><br><span style="color:red">优点：</span>将一对多转化为一对一（降低程序复杂度）；实现类之间的解耦，使各个对象间不再直接相互引用，而是通过中介者进行交互，故也很方便地增加新的客户类。<br><span style="color:red">缺点：</span>中介者数量过多，‌可能会导致系统的复杂性增加。<br><br></p>
+<h3 id="22、备忘录模式（Memento-Pattern）"><a href="#22、备忘录模式（Memento-Pattern）" class="headerlink" title="22、备忘录模式（Memento Pattern）"></a>22、备忘录模式（Memento Pattern）</h3><p><span style="color:red">备忘录模式：</span>(在Gof中又叫做快照模式（Snapshot Pattern）或Token模式)，在不破坏封闭的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样以后就可将该对象恢复到原先保存的状态。（即捕获和恢复对象内部状态，实现撤销和恢复功能,或者保存用户操作的历史记录）<br><br><span style="color:red">场景：</span>可以保存表单数据的历史记录，‌以便用户可以查看和恢复之前的数据状态；可以在使用前端应用时进行操作来保存操作前的状态，‌以便用户可以撤销操作并恢复到之前的状态；如游戏中的存档和读档功能（状态恢复）；如Word中的撤销（Ctrl+Z）功能（撤销操作）。‌<br><br><span style="color:red">优点：</span>能封装对象的状态信息便于后续恢复；为用户提供一种可恢复机制，提高软件灵活性和容错性；过保存对象状态的“快照”，可以快速恢复到某一特定状态。<br><span style="color:red">缺点：</span>会额外占用磁盘或内存等资源，尤其是在频繁使用备忘录功能时。<br><br></p>
+<h3 id="23、迭代器模式（Iterator-Pattern）"><a href="#23、迭代器模式（Iterator-Pattern）" class="headerlink" title="23、迭代器模式（Iterator Pattern）"></a>23、迭代器模式（Iterator Pattern）</h3><p><span style="color:red">迭代器模式：</span>不暴露对象内部结构的同时，可顺序访问聚合对象内部元素的表示。<br><br><span style="color:red">场景：</span>提供统一遍历不同集合结构的方式；需要访问集合对象的内容，但又不希望暴露其内部表示时。<br><br><span style="color:red">优点：</span>外部代码可以透明地访问（抽象出来的集合对象的遍历行为）的内部数据（分离遍历行为）；为遍历不同的集合结构提供统一接口。<br><span style="color:red">缺点：</span>增加一个集合类就需要增加一个对应的迭代器类，增加了系统的复杂性。<br><br></p>
+<h3 id="24、解释器模式（Interpreter-Pattern）"><a href="#24、解释器模式（Interpreter-Pattern）" class="headerlink" title="24、解释器模式（Interpreter Pattern）"></a>24、解释器模式（Interpreter Pattern）</h3><p><span style="color:red">解释器模式：</span>给定一个语言，定义它的文法的一种表示，并定义一个解释器，该解释器使用该表示来解释语言中的句子。<br><br><span style="color:red">场景：</span>当需要定义一种简单的自定义语言，并为其创建解释器时（自定义语言）；特定类型问题发生频率足够高：如日志处理，当需要处理大量格式不同的日志时，可以使用解释器模式来解析这些日志。<br><br><span style="color:red">优点：</span>容易改变和扩展“语言”的表示；通过定义不同的解释器类，可以灵活地处理不同的语法规则。<br><span style="color:red">缺点：</span>语法规则都需要一个对应类而过多会增加系统的复杂度。<br></p>
+<p><br><br></p>
+<h2 id="四、技巧型设计模式-—-实践经验总结特定技巧解决问题"><a href="#四、技巧型设计模式-—-实践经验总结特定技巧解决问题" class="headerlink" title="四、技巧型设计模式 — 实践经验总结特定技巧解决问题"></a><span style="color:blue">四、技巧型设计模式</span> — 实践经验总结特定技巧解决问题</h2><h3 id="25、链模式（Chain-of-Responsibility-Pattern）"><a href="#25、链模式（Chain-of-Responsibility-Pattern）" class="headerlink" title="25、链模式（Chain of Responsibility Pattern）"></a>25、链模式（Chain of Responsibility Pattern）</h3><p><span style="color:red">链模式：</span>通过在对象方法中将当前对象返回，实现对同一个对象多个方法的链式调用（简化对该对象多次引用）。<br><br><span style="color:red">场景：</span>不想或不能明确指定请求的接收者时；有多个对象可以处理一个请求，且具体由哪个对象处理该请求在运行时动态决定时。<br><br><span style="color:red">优点：</span>增加了给对象指定职责的灵活性；且有新的处理者时不需要修改原有代码，符合开闭原则；降低对象之间的耦合度。<br><span style="color:red">缺点：</span>每个处理者都需要链中的请求进行判断，增加系统复杂性；不恰当使用会导致请求在链中传递时被忽视或未被处理。<br><br></p>
+<h3 id="26、委托模式（Delegate-Pattern）"><a href="#26、委托模式（Delegate-Pattern）" class="headerlink" title="26、委托模式（Delegate Pattern）"></a>26、委托模式（Delegate Pattern）</h3><p><span style="color:red">委托模式：</span>有两个对象参与处理同一个请求，接受请求的对象将请求委托给另一个对象统一来处理请求。<br><br><span style="color:red">场景：</span>当一个对象需要将某个任务或请求委托给另一个对象处理时；需要实现事件处理或回调机制时。<br><br><span style="color:red">优点：</span>提高代码的复用性和灵活性，实现了任务或请求的委派，降低了类之间的耦合度。<br><span style="color:red">缺点：</span>委托链过长，可能会导致调用栈过深，影响性能；需要管理委托链的创建和维护，增加了代码的复杂性。<br><br></p>
+<h3 id="27、数据访问对象模式（DAO-——-Data-Access-Object-Pattern）-数据管理器"><a href="#27、数据访问对象模式（DAO-——-Data-Access-Object-Pattern）-数据管理器" class="headerlink" title="27、数据访问对象模式（DAO —— Data Access Object Pattern）(数据管理器)"></a>27、数据访问对象模式（DAO —— Data Access Object Pattern）(数据管理器)</h3><p><span style="color:red">数据访问对象模式：</span>对数据源的访问与存储去抽象和封装，DAO通过数据源链接的管理方便对数据访问与存储。<br><br><span style="color:red">场景：</span>当需要将数据访问逻辑与业务逻辑分离，以提高代码的可读性和可维护性时；在需要实现数据的持久化存储，并且希望上层应用不依赖于具体数据库实现时。<br><br><span style="color:red">优点：</span>数据访问逻辑与业务逻辑分离，降低业务逻辑对数据库的直接依赖。<br><span style="color:red">缺点：</span>增加了代码量（需要为每个数据表或数据访问需求编写相应的DAO类）；数据库结构的变化可能需要修改多个DAO类。<br><br></p>
+<h3 id="28、节流模式（Throttling-Pattern）"><a href="#28、节流模式（Throttling-Pattern）" class="headerlink" title="28、节流模式（Throttling Pattern）"></a>28、节流模式（Throttling Pattern）</h3><p><span style="color:red">节流模式：</span>对重复的业务逻辑进行节流，执行最后一次操作并取消其它操作。<br><br><span style="color:red">场景：</span>当系统资源有限需要防止资源被过度消耗时。当需要限制某个操作或请求的频率时，比如限制API的调用频率。<br><br><span style="color:red">优点：</span>减少不必要的操作或请求而提高系统性能；一定程度上防止资源耗尽或系统崩溃。<br><span style="color:red">缺点：</span>节流策略设置不当会导致关键操作被错误地节流；需要根据系统负载和资源情况动态调整节流策略。<br><br></p>
+<h3 id="29、简单模板模式（Simple-Template-Pattern）"><a href="#29、简单模板模式（Simple-Template-Pattern）" class="headerlink" title="29、简单模板模式（Simple Template Pattern）"></a>29、简单模板模式（Simple Template Pattern）</h3><p><span style="color:red">简单模板模式：</span>描述了一种通过模板(或格式化)字符串来生成视图或文档的技巧，拼凑出视图避免创建视图时大量节点操作（优化内存开销）。<br><br><span style="color:red">场景：</span>需要根据模板生成大量相似但略有不同的视图或文档时；视图或文档的生成过程较为复杂且需要频繁更改模板时。<br><br><span style="color:red">优点：</span>提高视图或文档的生成效率，简化（视图或文档的生成）过程减少重复的代码。<br><span style="color:red">缺点：</span>模板字符串的维护可能变得复杂，特别是当模板结构复杂多变时；模板引擎的性能可能会影响最终的生成效率。<br><br></p>
+<h3 id="30、惰性模式（Layier）"><a href="#30、惰性模式（Layier）" class="headerlink" title="30、惰性模式（Layier）"></a>30、惰性模式（Layier）</h3><p><span style="color:red">惰性模式：</span>减少（每次代码执行重复性的）分支判断，通过对对象重定义来屏蔽原对象中的分支判断。<br><br><span style="color:red">场景：</span>单页应用（SPA）中按需加载页面或组件。对象的创建或初始化开销较大，且不是每次都需要使用时。处理大量数据或复杂对象时，延迟加载非关键数据。<br><br><span style="color:red">优点：</span>延迟初始化对象的创建或资源的加载，减少不必要的计算和内存使用（性能优化）；需要时才初始化，特别是处理大量数据或复杂对象时（按需加载）；避免在程序启动时加载所有可能用不到的资源（简化代码）。<br><span style="color:red">缺点：</span>繁使用或需要频繁初始化，‌可能会导致运行时性能下降；大量数据或复杂计算时页面响应变慢，会影响到用户体验。<br><br></p>
+<h3 id="31、参与者模式（Participator-Pattern）"><a href="#31、参与者模式（Participator-Pattern）" class="headerlink" title="31、参与者模式（Participator Pattern）"></a>31、参与者模式（Participator Pattern）</h3><p><span style="color:red">参与者模式：</span>特定作用域执行给的的函数，并将参数原封不动地传递。<br><br><span style="color:red">场景：</span>需要支持插件或扩展机制的应用。多个组件或对象可能共享状态，并通过某种机制（如Redux、Vuex等）来同步和管理这些状态（状态管理）。多个组件或对象通过事件共同监听和触发机制相互通信完成某项任务（事件监听与触发）。<br><br><span style="color:red">优点：</span>允许不同的组件或对象以灵活方式参与任务；参与者之间相对独立，降低系统间耦合度；易于添加新的参与者或修改现有参与者的行为。<br><span style="color:red">缺点：</span>参与者继续增加会增加系统的复杂性，且需要一种有效的机制来协调不同参与者之间的行为。<br><br></p>
+<h3 id="32、等待者模式（Waiter-Pattern）"><a href="#32、等待者模式（Waiter-Pattern）" class="headerlink" title="32、等待者模式（Waiter Pattern）"></a>32、等待者模式（Waiter Pattern）</h3><p><span style="color:red">等待者模式：</span>通过监听多个异步操作，触发未来发生的动作。（通常指Promise或类似机制）<br><br><span style="color:red">场景：</span>处理网络请求、文件读写等异步操作。等待多个异步操作完成后才能继续执行后续逻辑的场景。处理异步操作结果并基于这些结果执行后续操作的场景。<br><br><span style="color:red">优点：</span>处理异步操作，避免回调地狱；支持链式调用方便处理多个异步操作的结果；统一的错误处理机制能集中处理可能的错误。<br><span style="color:red">缺点：</span>开发者需要熟悉Promise和异步编程；不恰当使用Promise（如创建过多的Promise链）会导致代码难理解和维护。<br></p>
+<p><br><br></p>
+<h2 id="五、架构型设计模式-—-提供些子系统并指定各职责再合体"><a href="#五、架构型设计模式-—-提供些子系统并指定各职责再合体" class="headerlink" title="五、架构型设计模式 — 提供些子系统并指定各职责再合体"></a><span style="color:blue"></span>五、架构型设计模式 — 提供些子系统并指定各职责再合体</h2><h3 id="33、同步模块模式（SDM-——-Synchronous-Module-Definition）"><a href="#33、同步模块模式（SDM-——-Synchronous-Module-Definition）" class="headerlink" title="33、同步模块模式（SDM —— Synchronous Module Definition）"></a>33、同步模块模式（SDM —— Synchronous Module Definition）</h3><p><span style="color:red">同步模块模式（模块化）：</span>发出请求后，无论模块是否存在，立即执行后续的逻辑，实现模块开发中对模块的立即引用。<br><br><span style="color:red">模块化：</span>将复杂的系统分解成高内聚、低耦合的模块，使系统开发变得可控、可维护、可拓展，提高模块的复用率<br><br><span style="color:red">场景：</span>适用于任务顺序明确、逻辑简单的场景，如简单脚本、批处理任务。适用于CPU密集型任务和负载较低的小型应用。<br><br><span style="color:red">优点：</span>执行顺序与代码顺序一致易于理解和调试；错误处理简单，异常可以直接捕获和处理；资源管理方便，不需要考虑并发和上下文切换的问题。<br><span style="color:red">缺点：</span>低效的资源利用，特别是在等待I&#x2F;O操作（如网络请求、文件读写）完成时，CPU和其他资源可能处于闲置状态；阻塞问题，同步操作会阻塞主线程，可能导致应用程序的响应速度变慢，特别是在用户界面编程中，可能会导致界面卡顿。<br><br></p>
+<h3 id="34、异步模块模式（AMD-——-Asynchronous-Module-Definition）"><a href="#34、异步模块模式（AMD-——-Asynchronous-Module-Definition）" class="headerlink" title="34、异步模块模式（AMD —— Asynchronous Module Definition）"></a>34、异步模块模式（AMD —— Asynchronous Module Definition）</h3><p><span style="color:red">异步模块模式（模块化）：</span>发出请求后，继续其他业务逻辑，直到模块加载完成执行后续的逻辑，实现模块开发中模块加载完成后的引用。<br><br><span style="color:red">模块化：</span>将复杂的系统分解成高内聚、低耦合的模块，使系统开发变得可控、可维护、可拓展，提高模块的复用率。<br><br><span style="color:red">场景：</span>适用于高并发、高吞吐量的场景，如Web服务器、网络编程等。适用于I&#x2F;O密集型任务和需要高并发处理的应用，如处理大量网络请求、文件I&#x2F;O操作等。<br><br><span style="color:red">优点：</span>提高系统吞吐量，在等待I&#x2F;O操作完成时可以继续执行其他任务；增强用户体验，特别是在用户界面编程中，可以避免界面卡顿，提高响应速度；资源利用率高，可以更高效地利用CPU和内存。<br><span style="color:red">缺点：</span>复杂性增加，异步编程通常比同步编程更复杂，需要处理回调、Promise、async&#x2F;await等；调试困难，异步操作的非线性执行顺序使得调试和追踪问题变得更加困难。<br><br></p>
+<h3 id="35、组件化开发模式（Component-based-Development-Model）"><a href="#35、组件化开发模式（Component-based-Development-Model）" class="headerlink" title="35、组件化开发模式（Component-based Development Model）"></a>35、组件化开发模式（Component-based Development Model）</h3><p><span style="color:red">组件化开发模式：</span>将UI划分为一系列可复用的组件，每个组件都具有明确的功能和职责。<br><br><span style="color:red">场景：</span>适用于所有需要构建UI的前端应用，特别是当应用需要支持多种设备和屏幕尺寸时。<br><br><span style="color:red">优点：</span>提高代码的可维护性和可重用性，降低开发和维护成本。<br><span style="color:red">缺点：</span>需要合理的组件划分和架构设计，以避免组件间的过度耦合。<br><br></p>
+<h3 id="36、Widget模式（小组件模式）"><a href="#36、Widget模式（小组件模式）" class="headerlink" title="36、Widget模式（小组件模式）"></a>36、Widget模式（小组件模式）</h3><p><span style="color:red">Widget模式：</span>强调组件的独立性和可重用性，借用Web Widget思想将页面分解成部件（组件），针对部件开发，最终组合成完整的页面。<br><br><span style="color:red">场景：</span>Web开发，特别是需要快速迭代和部署的项目。适用于需要高度自定义和可配置用户界面的应用，如企业级应用、电商平台等。<br><br><span style="color:red">优点：</span>封装复杂的UI细节和操作可更轻松创建用户界面；内置的丰富交互效果（如动画、响应式设计）给用户更多操作体验；组件化开发减少重复代码需求，降低后期修改、优化和调试的时间成本。<br><span style="color:red">缺点：</span>组件间接口不合理会增加系统复杂性；组件都要额外的渲染和状态管理，过度细化导致系统的整体性能下降。<br><br></p>
+<h3 id="37、前端路由模式（Front-end-Routing-Pattern）"><a href="#37、前端路由模式（Front-end-Routing-Pattern）" class="headerlink" title="37、前端路由模式（Front-end Routing Pattern）"></a>37、前端路由模式（Front-end Routing Pattern）</h3><p><span style="color:red">前端路由模式：</span>一种在用户界面中实现页面跳转的技术，它不需要重新加载页面，而是通过JavaScript动态地改变URL并更新页面内容。<br><br><span style="color:red">场景：</span>适用于SPA（单页应用）和需要实现无刷新页面跳转的前端应用。<br><br><span style="color:red">优点：</span>提高用户体验，使得页面跳转更加流畅和自然。<br><span style="color:red">缺点：</span>需要额外的开发和配置工作，以确保路由的正确性和可用性。<br><br></p>
+<!-- #### 38、Flux/Redux模式（响应式模式也是框架，及其它vue）
+Flux/Redux模式：Flux和Redux是两种状态管理架构（Redux是进化Flux），它们通过中心化的状态管理来避免复杂的组件间通信，使得应用的状态变化更加可预测和易于管理。<br>
+场景：适用于大型、复杂的前端应用，特别是当应用的状态管理变得复杂且难以控制时。<br>
+优缺点：提高应用的可维护性和可扩展性，使状态变化更加清晰和可追踪。。对初学者掌握就比较复杂。 -->
+
+<h3 id="38、响应式设计模式（Responsive-Design-Pattern）"><a href="#38、响应式设计模式（Responsive-Design-Pattern）" class="headerlink" title="38、响应式设计模式（Responsive Design Pattern）"></a>38、响应式设计模式（Responsive Design Pattern）</h3><p><span style="color:red">响应式设计模式：</span>一种使网页能够在不同设备和屏幕尺寸上良好展示的设计方法。<br><br><span style="color:red">场景：</span>适用于所有需要支持移动设备访问的网页和前端应用。如Flux&#x2F;Redux设计模式（Redux是进化Flux）、Dva、VUEX等状态管理框架。<br><br><span style="color:red">优点：</span>提高用户体验，使网页能在不同设备切换。<br><span style="color:red">缺点：</span>可能需要额外的开发和测试工作，以确保网页在不同设备和屏幕尺寸上的兼容性。<br><br></p>
+<h3 id="39、MVC模式（Model-View-Controller）"><a href="#39、MVC模式（Model-View-Controller）" class="headerlink" title="39、MVC模式（Model-View-Controller）"></a>39、MVC模式（Model-View-Controller）</h3><p><span style="color:red">MVC模式：</span>一种将应用程序分为三个主要部分的架构模式：模型（Model）、视图（View）和控制器（Controller）。模型负责业务逻辑和数据管理，视图负责展示数据，控制器负责接收用户输入并调用模型和视图以完成用户请求。<br><br><span style="color:red">场景：</span>适用于需要明确分离业务逻辑、数据展示和用户交互的复杂前端应用，如企业级应用、电商平台等。<br><br><span style="color:red">优点：</span>降低代码耦合度提高可维护性，使开发团队可更加专注各自部分。<br><span style="color:red">缺点：</span>在某些情况下可能导致代码的重复和复杂性增加，特别是在视图和控制器之间的交互较多时。<br><br></p>
+<h3 id="40、MVP模式（Model-View-Presenter）"><a href="#40、MVP模式（Model-View-Presenter）" class="headerlink" title="40、MVP模式（Model-View-Presenter）"></a>40、MVP模式（Model-View-Presenter）</h3><p><span style="color:red">MVP模式：</span>是MVC模式的一个变体，旨在更好地分离视图（View）和模型（Model）并引入一个介于它们之间主持人——呈现器（Presenter）。<br><br><span style="color:red">场景：</span>特别适用于需要清晰分离用户界面逻辑和业务逻辑的场景，比如大型Android或iOS应用。<br><br><span style="color:red">优点：</span>业务逻辑从表示层分离出来，提高代码的可维护性和可测试性；测试方便（Presenter独立于View，可直接测试Presenter逻辑而不需运行UI代码）；Model与View分离使Model可被多个View复用；各个组件间依赖关系较低，降低系统的耦合度；与直接使用MVC或MVVM（Model-View-ViewModel）等模式相比，MVP引入了Presenter这一额外的层，增加了系统的复杂性。<br><span style="color:red">缺点：</span>对于初学者来说，理解和实现MVP模式可能比MVC模式更加困难。<br><br></p>
+<h3 id="41、MVVM模式（Model-View-ViewModel）"><a href="#41、MVVM模式（Model-View-ViewModel）" class="headerlink" title="41、MVVM模式（Model-View-ViewModel）"></a>41、MVVM模式（Model-View-ViewModel）</h3><p><span style="color:red">MVVM模式：</span>（MVC基础上演化）引入了一个视图模型（ViewModel）作为桥梁，负责处理视图和模型之间的数据绑定。<br><br><span style="color:red">场景：</span>适用于需要实现双向数据绑定和复杂交互的前端应用，如SPA（单页应用）、数据可视化工具等。<br><br><span style="color:red">优点：</span>简化代码维护，更好可测试性，通过数据绑定减少代码量。<br><span style="color:red">缺点：</span>响应式系统可能变得复杂且难以理解，特别是在处理大量数据和复杂交互时。<br><br></p>
+<!-- 
+## 常用的哪些模式？
+
+其实并非有固定的常用模式，哪些适合你的开发，哪些经常使用就是常用模式（废话多了...），一句话，要使用的就是常用的模式
+
+下面列举一些：
+
+1、外观模式
+2、代理模式 
+3、工厂模式 
+4、单例模式
+5、策略模式
+6、观察者模式
+7、中介者模式
+8、访问者模式
+9、装饰者模式
+10、迭代器模式
+11、模块模式
+12、构造函数模式
+13、混合模式 -->
+
+
+<p><br><br><br><br><br>（待续…）<br><br><br></p>
+<p style="font-size: 8px">
+  部分资源转载于：《JavaScript设计模式》一书<br>
+</p>
+<br>
+<p style="font-size: 10px">
+注：<br>本站商业转载需<a target="_blank" rel="noopener" href="https://email.163.com/">联系博主:wyyx9082hgl@163.com</a>授权，非商业转载请注明出处。<br>
+    无法联系博主请在评论区注明，未经授权或无联系方式相关法律责任问题将追究。
+</p>
+
+<p style="font-size: 10px">
+    本站为学习交流使用，非商业用途。如有资源侵权请<a target="_blank" rel="noopener" href="https://email.163.com/">[联系博主]</a>，感谢您的支持！
+</p>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/tomnyblog.github.io/categories/%E5%89%8D%E7%AB%AF/" class="category-chain-item">前端</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tomnyblog.github.io/tags/%E5%89%8D%E5%90%8E%E7%AB%AF/" class="print-no-link">#前后端</a>
+      
+        <a href="/tomnyblog.github.io/tags/%E5%89%8D%E7%AB%AF/" class="print-no-link">#前端</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>前端设计模式</div>
+      <div>https://helin9082.github.io/tomnyblog.github.io/2024/05/03/Zfront-end_design-pattern/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Tomny</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年5月3日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/tomnyblog.github.io/2024/05/05/Zmodularization/" title="前端模块化开发">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">前端模块化开发</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/tomnyblog.github.io/2024/05/01/webGamingPage/" title="在线多款网页版小游戏">
+                        <span class="hidden-mobile">在线多款网页版小游戏</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"1WMPCBtXbHsEZQPtn46FyHKA-gzGzoHsz","appKey":"qTAuXOECTZoLspCFmf9XJX2A","path":"window.location.pathname","placeholder":"是的，你应该想说点什么...","avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总浏览量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/tomnyblog.github.io/js/events.js" ></script>
+<script  src="/tomnyblog.github.io/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/tomnyblog.github.io/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/tomnyblog.github.io/js/leancloud.js" ></script>
+
+  <script  src="/tomnyblog.github.io/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/tomnyblog.github.io/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
